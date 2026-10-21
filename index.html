@@ -7,15 +7,12 @@
   <meta name="description" content="کارت تماس دیجیتال حامد غلامزاده، مدیر دفتر پیشخوان دولت">
   <title>حامد غلامزاده | کارت ویزیت دیجیتال</title>
 
-  <!-- کتابخانه نقشه تعاملی -->
+  <!-- Leaflet CSS -->
   <link
+    id="leaflet-css"
     rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"
   >
-  <script
-    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    defer
-  ></script>
 
   <style>
     :root {
@@ -28,7 +25,6 @@
       --paper: #ffffff;
       --line: #e4eaf5;
       --soft: #eef4ff;
-      --radius: 22px;
     }
 
     * {
@@ -184,7 +180,7 @@
       font-size: 12px;
     }
 
-    /* محتوای اصلی */
+    /* محتوای کارت */
 
     .content {
       padding: 29px 31px 27px;
@@ -277,21 +273,14 @@
 
     /* دکمه‌ها */
 
-    .actions {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 22px;
-    }
-
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 9px;
-      min-height: 50px;
-      padding: 12px 15px;
-      border-radius: 15px;
+      min-height: 47px;
+      padding: 11px 15px;
+      border-radius: 14px;
       font-family: inherit;
       font-size: 13px;
       font-weight: 700;
@@ -314,8 +303,8 @@
     }
 
     .btn svg {
-      width: 19px;
-      height: 19px;
+      width: 20px;
+      height: 20px;
       flex-shrink: 0;
     }
 
@@ -329,13 +318,22 @@
       background: #1d4ed8;
     }
 
+    /* تماس سریع */
+
+    .actions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 22px;
+    }
+
     .btn-secondary {
       color: var(--blue-dark);
       background: var(--soft);
       border: 1px solid #d9e5ff;
     }
 
-    /* موقعیت مکانی و نقشه */
+    /* موقعیت دفتر */
 
     .location-card {
       margin-top: 28px;
@@ -349,7 +347,7 @@
       display: flex;
       align-items: flex-start;
       gap: 13px;
-      margin-bottom: 16px;
+      margin-bottom: 17px;
     }
 
     .location-pin {
@@ -369,9 +367,15 @@
       height: 23px;
     }
 
+    .location-info {
+      flex: 1;
+      min-width: 0;
+    }
+
     .location-title {
       margin: 0 0 5px;
       font-size: 16px;
+      line-height: 1.9;
     }
 
     .location-address {
@@ -381,47 +385,60 @@
       line-height: 2;
     }
 
-    /* قاب نقشه */
+    .address-route {
+      margin-top: 9px;
+    }
+
+    /* نقشه */
 
     .map-wrapper {
       position: relative;
       width: 100%;
-      margin: 17px 0 14px;
+      margin: 14px 0 13px;
       overflow: hidden;
       border: 1px solid #dce7fc;
       border-radius: 17px;
-      background: #eaf1fb;
+      background: #edf3ff;
       box-shadow: 0 5px 18px rgba(28,57,112,.07);
     }
 
     #office-map {
       width: 100%;
       height: 340px;
-      min-height: 260px;
-      background: #eaf1fb;
-      z-index: 1;
+      min-height: 250px;
+      background: #edf3ff;
       direction: ltr;
+      z-index: 1;
     }
 
-    .map-loading {
+    .map-message {
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
+      gap: 10px;
       min-height: 260px;
-      padding: 20px;
+      padding: 22px;
       color: var(--muted);
-      font-size: 13px;
       text-align: center;
+      font-size: 13px;
       line-height: 2;
     }
 
-    .map-error {
-      padding: 22px 12px;
-      color: #9f1239;
-      background: #fff1f2;
-      font-size: 12px;
-      line-height: 2;
-      text-align: center;
+    .map-message svg {
+      width: 35px;
+      height: 35px;
+      color: var(--blue);
+    }
+
+    .map-message strong {
+      color: var(--ink);
+      font-size: 14px;
+    }
+
+    .map-message a {
+      color: var(--blue);
+      font-weight: bold;
     }
 
     .leaflet-popup-content-wrapper {
@@ -442,37 +459,14 @@
       font-size: 13px;
     }
 
-    .leaflet-container a {
-      -webkit-tap-highlight-color: transparent;
-    }
+    /* دکمه زیر نقشه */
 
-    /* دکمه‌های نقشه */
-
-    .map-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .map-btn {
-      min-height: 47px;
-      padding: 10px 11px;
-      background: #fff;
-      color: var(--ink);
-      border: 1px solid #dfe7f5;
-      border-radius: 13px;
-      font-size: 12px;
-    }
-
-    .map-btn svg {
-      width: 20px;
-      height: 20px;
-      color: var(--blue);
-    }
-
-    .map-btn:hover {
-      background: #f7faff;
-      border-color: #a9c4ff;
+    .map-route {
+      display: flex;
+      width: 100%;
+      min-height: 51px;
+      margin-top: 12px;
+      font-size: 14px;
     }
 
     .map-note {
@@ -509,8 +503,6 @@
       height: 17px;
       color: var(--blue);
     }
-
-    /* نمایش در موبایل */
 
     @media (max-width: 560px) {
       body {
@@ -585,16 +577,6 @@
         min-height: 250px;
       }
 
-      .map-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 8px;
-      }
-
-      .map-btn {
-        padding: 10px 7px;
-        font-size: 11px;
-      }
-
       .foot {
         align-items: flex-start;
         flex-direction: column;
@@ -610,10 +592,6 @@
         flex-basis: 53px;
         width: 53px;
         height: 53px;
-      }
-
-      .map-grid {
-        grid-template-columns: 1fr;
       }
     }
 
@@ -651,7 +629,7 @@
   <main class="page">
     <article class="card">
 
-      <!-- سربرگ کارت -->
+      <!-- سربرگ -->
       <header class="hero">
         <div class="brand">
           <span class="brand-mark" aria-hidden="true">
@@ -694,8 +672,9 @@
         </div>
       </header>
 
-      <!-- اطلاعات تماس -->
       <section class="content">
+
+        <!-- اطلاعات تماس -->
         <div class="section-head">
           <span class="section-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none"
@@ -711,7 +690,6 @@
 
         <div class="details">
 
-          <!-- موبایل -->
           <div class="detail">
             <div class="label">
               <svg viewBox="0 0 24 24" fill="none"
@@ -726,7 +704,6 @@
             </div>
           </div>
 
-          <!-- تلفن دفتر -->
           <div class="detail">
             <div class="label">
               <svg viewBox="0 0 24 24" fill="none"
@@ -742,7 +719,6 @@
             </div>
           </div>
 
-          <!-- ایمیل -->
           <div class="detail wide">
             <div class="label">
               <svg viewBox="0 0 24 24" fill="none"
@@ -760,7 +736,6 @@
             </div>
           </div>
 
-          <!-- وب‌سایت -->
           <div class="detail">
             <div class="label">
               <svg viewBox="0 0 24 24" fill="none"
@@ -774,7 +749,6 @@
             <div class="value" dir="ltr">mr.pishkhan</div>
           </div>
 
-          <!-- نشانی -->
           <div class="detail">
             <div class="label">
               <svg viewBox="0 0 24 24" fill="none"
@@ -790,7 +764,7 @@
 
         </div>
 
-        <!-- دکمه‌های تماس سریع -->
+        <!-- تماس سریع -->
         <div class="actions">
           <a class="btn btn-primary" href="tel:+989371431915">
             <svg viewBox="0 0 24 24" fill="none"
@@ -815,7 +789,7 @@
           </a>
         </div>
 
-        <!-- نقشه تعاملی و مسیریابی -->
+        <!-- موقعیت مکانی -->
         <section class="location-card" aria-labelledby="location-heading">
 
           <div class="section-head">
@@ -830,6 +804,7 @@
             <h2 id="location-heading">موقعیت مکانی و مسیریابی</h2>
           </div>
 
+          <!-- آدرس و دکمه مسیریابی اول -->
           <div class="location-top">
             <span class="location-pin" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none"
@@ -840,110 +815,64 @@
               </svg>
             </span>
 
-            <div>
+            <div class="location-info">
               <h3 class="location-title">دفتر پیشخوان دولت</h3>
-              <p class="location-address">
-                باهنر غربی، پلاک ۵۶
-                <br>
-                موقعیت دفتر را روی نقشه مشاهده کنید و برای مسیریابی یکی از گزینه‌ها را انتخاب کنید.
-              </p>
+              <p class="location-address">باهنر غربی، پلاک ۵۶</p>
+
+              <a
+                class="btn btn-primary address-route"
+                href="https://www.google.com/maps/dir/?api=1&destination=32.862765%2C59.219895"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="مسیریابی به دفتر پیشخوان دولت"
+              >
+                <svg viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="1.8"
+                     stroke-linecap="round" stroke-linejoin="round"
+                     aria-hidden="true">
+                  <path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3z"/>
+                  <path d="M9 3v15M15 6v15"/>
+                </svg>
+                مسیریابی
+              </a>
             </div>
           </div>
 
-          <!-- خود نقشه به‌جای نمایش مختصات -->
+          <!-- نقشه -->
           <div class="map-wrapper">
-            <div id="office-map"
-                 role="application"
-                 aria-label="نقشه تعاملی دفتر پیشخوان دولت">
-              <div class="map-loading">در حال بارگذاری نقشه...</div>
+            <div id="office-map" aria-label="نقشه دفتر پیشخوان دولت">
+              <div class="map-message">
+                <strong>در حال بارگذاری نقشه...</strong>
+                لطفاً چند لحظه صبر کنید.
+              </div>
             </div>
           </div>
 
-          <!-- گزینه‌های مسیریابی -->
-          <div class="map-grid">
-
-            <!-- نقشه گوشی -->
-            <a class="btn btn-primary"
-               href="geo:32.862765,59.219895?q=32.862765,59.219895"
-               aria-label="باز کردن موقعیت در برنامه نقشه گوشی">
-              <svg viewBox="0 0 24 24" fill="none"
-                   stroke="currentColor" stroke-width="1.8"
-                   stroke-linecap="round" stroke-linejoin="round"
-                   aria-hidden="true">
-                <path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3z"/>
-                <path d="M9 3v15M15 6v15"/>
-              </svg>
-              نقشه گوشی
-            </a>
-
-            <!-- بلد -->
-            <a class="btn map-btn"
-               href="https://balad.ir/location?latitude=32.862765&amp;longitude=59.219895&amp;zoom=16.5"
-               target="_blank"
-               rel="noopener noreferrer">
-              <svg viewBox="0 0 24 24" fill="none"
-                   stroke="currentColor" stroke-width="1.8"
-                   stroke-linecap="round" stroke-linejoin="round"
-                   aria-hidden="true">
-                <path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/>
-                <circle cx="12" cy="10" r="2.5"/>
-              </svg>
-              مشاهده در بلد
-            </a>
-
-            <!-- Google Maps -->
-            <a class="btn map-btn"
-               href="https://www.google.com/maps/dir/?api=1&amp;destination=32.862765%2C59.219895"
-               target="_blank"
-               rel="noopener noreferrer">
-              <svg viewBox="0 0 24 24" fill="none"
-                   stroke="currentColor" stroke-width="1.8"
-                   stroke-linecap="round" stroke-linejoin="round"
-                   aria-hidden="true">
-                <path d="M12 22s8-7.2 8-13a8 8 0 1 0-16 0c0 5.8 8 13 8 13Z"/>
-                <circle cx="12" cy="9" r="2.5"/>
-              </svg>
-              مسیریابی Google Maps
-            </a>
-
-            <!-- Waze -->
-            <a class="btn map-btn"
-               href="https://www.waze.com/ul?ll=32.862765%2C59.219895&amp;navigate=yes"
-               target="_blank"
-               rel="noopener noreferrer">
-              <svg viewBox="0 0 24 24" fill="none"
-                   stroke="currentColor" stroke-width="1.8"
-                   stroke-linecap="round" stroke-linejoin="round"
-                   aria-hidden="true">
-                <path d="M5 15a8 8 0 1 1 14-1l-2 3H9l-4-2Z"/>
-                <path d="M9 21h6M9 11h.01M15 11h.01"/>
-              </svg>
-              مسیریابی Waze
-            </a>
-
-            <!-- Apple Maps -->
-            <a class="btn map-btn"
-               href="https://maps.apple.com/?daddr=32.862765,59.219895"
-               target="_blank"
-               rel="noopener noreferrer">
-              <svg viewBox="0 0 24 24" fill="none"
-                   stroke="currentColor" stroke-width="1.8"
-                   stroke-linecap="round" stroke-linejoin="round"
-                   aria-hidden="true">
-                <path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3z"/>
-                <path d="M9 3v15M15 6v15"/>
-              </svg>
-              مسیریابی Apple Maps
-            </a>
-
-          </div>
+          <!-- دکمه مسیریابی دوم، زیر نقشه -->
+          <a
+            class="btn btn-primary map-route"
+            href="https://www.google.com/maps/dir/?api=1&destination=32.862765%2C59.219895"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="شروع مسیریابی به دفتر پیشخوان دولت"
+          >
+            <svg viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="1.8"
+                 stroke-linecap="round" stroke-linejoin="round"
+                 aria-hidden="true">
+              <path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3z"/>
+              <path d="M9 3v15M15 6v15"/>
+            </svg>
+            مسیریابی
+          </a>
 
           <p class="map-note">
-            برای حرکت روی نقشه، آن را لمس کنید و بکشید؛ برای بزرگ‌نمایی
-            از دکمه‌های نقشه یا حرکت دو انگشتی استفاده کنید. با انتخاب
-            نشانگر، نام و نشانی دفتر نمایش داده می‌شود.
-            برای نمایش نقشه و مسیریابی، اتصال اینترنت لازم است.
+            نقشه را لمس کنید و بکشید تا موقعیت را مشاهده کنید.
+            برای بزرگ‌نمایی از دو انگشت یا دکمه‌های نقشه استفاده کنید.
+            با لمس نشانگر، اطلاعات دفتر نمایش داده می‌شود.
+            برای بارگذاری نقشه اتصال اینترنت لازم است.
           </p>
+
         </section>
 
         <!-- پابرگ -->
@@ -966,107 +895,207 @@
     </article>
   </main>
 
+  <!-- راه‌اندازی مطمئن‌تر کتابخانه نقشه -->
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const latitude = 32.862765;
-      const longitude = 59.219895;
-      const mapElement = document.getElementById("office-map");
+    (function () {
+      const css = document.getElementById("leaflet-css");
 
-      // بررسی در دسترس بودن کتابخانه نقشه
-      if (typeof L === "undefined") {
-        mapElement.innerHTML =
-          '<div class="map-error">' +
-          'نقشه بارگذاری نشد. اتصال اینترنت را بررسی کنید و صفحه را دوباره باز کنید.' +
-          '</div>';
-        return;
+      // در صورت شکست CDN اصلی، CSS را از CDN جایگزین دریافت کن.
+      css.addEventListener("error", function () {
+        const fallback = document.createElement("link");
+        fallback.rel = "stylesheet";
+        fallback.href =
+          "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+        document.head.appendChild(fallback);
+      });
+
+      function loadFallbackScript() {
+        if (window.L) {
+          initializeMap();
+          return;
+        }
+
+        const fallback = document.createElement("script");
+        fallback.src =
+          "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
+
+        fallback.onload = initializeMap;
+        fallback.onerror = showLibraryError;
+        document.head.appendChild(fallback);
       }
 
-      // ایجاد نقشه
-      const map = L.map("office-map", {
-        scrollWheelZoom: false,
-        zoomControl: true
-      }).setView([latitude, longitude], 16);
+      const leafletScript = document.createElement("script");
+      leafletScript.src =
+        "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js";
 
-      // بارگذاری نقشه از OpenStreetMap
-      L.tileLayer(
-        "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-        {
-          maxZoom: 19,
-          attribution:
-            '&copy; <a href="https://www.openstreetmap.org/copyright" ' +
-            'target="_blank" rel="noopener noreferrer">OpenStreetMap</a>'
+      leafletScript.onload = initializeMap;
+      leafletScript.onerror = loadFallbackScript;
+
+      document.head.appendChild(leafletScript);
+
+      function showLibraryError() {
+        const element = document.getElementById("office-map");
+
+        element.innerHTML =
+          '<div class="map-message">' +
+            '<strong>نقشه بارگذاری نشد</strong>' +
+            '<span>اتصال اینترنت یا دسترسی به سرویس نقشه را بررسی کنید.</span>' +
+            '<a href="https://www.google.com/maps/dir/?api=1&destination=32.862765%2C59.219895" ' +
+            'target="_blank" rel="noopener noreferrer">' +
+            'بازکردن نقشه و مسیریابی</a>' +
+          '</div>';
+      }
+
+      let mapInitialized = false;
+
+      function initializeMap() {
+        if (mapInitialized || !window.L) return;
+
+        mapInitialized = true;
+
+        const latitude = 32.862765;
+        const longitude = 59.219895;
+        const element = document.getElementById("office-map");
+
+        try {
+          element.innerHTML = "";
+
+          const map = L.map(element, {
+            zoomControl: true,
+            scrollWheelZoom: false
+          });
+
+          map.setView([latitude, longitude], 16);
+
+          const tiles = L.tileLayer(
+            "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+            {
+              maxZoom: 19,
+              attribution:
+                '&copy; <a href="https://www.openstreetmap.org/copyright" ' +
+                'target="_blank" rel="noopener noreferrer">OpenStreetMap</a>',
+              crossOrigin: true
+            }
+          );
+
+          let loadedTiles = 0;
+          let failedTiles = 0;
+          let errorMessageShown = false;
+
+          const errorOverlay = document.createElement("div");
+
+          errorOverlay.style.cssText =
+            "display:none;padding:10px;background:#fff1f2;" +
+            "color:#9f1239;text-align:center;font:12px Tahoma;" +
+            "line-height:2;";
+
+          errorOverlay.textContent =
+            "تصاویر نقشه بارگذاری نمی‌شوند. اتصال اینترنت را بررسی کنید.";
+
+          element.parentNode.insertBefore(
+            errorOverlay,
+            element.nextSibling
+          );
+
+          tiles.on("tileload", function () {
+            loadedTiles++;
+
+            if (loadedTiles > 0) {
+              errorOverlay.style.display = "none";
+              errorMessageShown = false;
+            }
+          });
+
+          tiles.on("tileerror", function () {
+            failedTiles++;
+
+            // فقط اگر هیچ کاشی‌ای دریافت نشده باشد خطا را نمایش بده.
+            if (
+              loadedTiles === 0 &&
+              failedTiles >= 3 &&
+              !errorMessageShown
+            ) {
+              errorMessageShown = true;
+              errorOverlay.style.display = "block";
+            }
+          });
+
+          tiles.addTo(map);
+
+          // نشانگر محل دفتر
+          const officeIcon = L.divIcon({
+            className: "office-marker",
+            html:
+              '<div style="' +
+                'width:38px;height:38px;' +
+                'background:#2563eb;' +
+                'border:3px solid #fff;' +
+                'border-radius:50% 50% 50% 0;' +
+                'transform:rotate(-45deg);' +
+                'box-shadow:0 3px 12px rgba(0,0,0,.22);' +
+                'display:flex;align-items:center;justify-content:center;' +
+              '">' +
+                '<span style="' +
+                  'color:#fff;font-size:19px;font-weight:bold;' +
+                  'transform:rotate(45deg);' +
+                '">⌂</span>' +
+              '</div>',
+            iconSize: [38, 38],
+            iconAnchor: [19, 38],
+            popupAnchor: [0, -35]
+          });
+
+          const marker = L.marker(
+            [latitude, longitude],
+            { icon: officeIcon }
+          ).addTo(map);
+
+          marker.bindPopup(
+            '<div>' +
+              '<strong>دفتر پیشخوان دولت</strong><br>' +
+              'حامد غلامزاده<br>' +
+              'باهنر غربی، پلاک ۵۶<br>' +
+              '<a href="https://www.google.com/maps/dir/?api=1&destination=' +
+              latitude + ',' + longitude + '" ' +
+              'target="_blank" rel="noopener noreferrer">' +
+              'مسیریابی</a>' +
+            '</div>'
+          );
+
+          marker.openPopup();
+
+          // جلوگیری از زوم ناخواسته هنگام پیمایش صفحه در موبایل.
+          map.on("click", function () {
+            map.scrollWheelZoom.enable();
+          });
+
+          map.on("mouseout", function () {
+            map.scrollWheelZoom.disable();
+          });
+
+          // اصلاح اندازه در بارگذاری اولیه و تغییر اندازه صفحه
+          function refreshMapSize() {
+            map.invalidateSize({ pan: false });
+          }
+
+          setTimeout(refreshMapSize, 200);
+          setTimeout(refreshMapSize, 800);
+          window.addEventListener("resize", refreshMapSize);
+
+          // بعضی مرورگرهای موبایل دیرتر ابعاد صفحه را تثبیت می‌کنند.
+          if (window.visualViewport) {
+            window.visualViewport.addEventListener(
+              "resize",
+              refreshMapSize
+            );
+          }
+
+        } catch (error) {
+          mapInitialized = false;
+          showLibraryError();
         }
-      ).addTo(map);
-
-      // نشانگر اختصاصی دفتر
-      const officeIcon = L.divIcon({
-        className: "office-marker",
-        html:
-          '<div style="' +
-            'width:38px;' +
-            'height:38px;' +
-            'background:#2563eb;' +
-            'border:3px solid #fff;' +
-            'border-radius:50% 50% 50% 0;' +
-            'transform:rotate(-45deg);' +
-            'box-shadow:0 3px 12px rgba(0,0,0,.22);' +
-            'display:flex;' +
-            'align-items:center;' +
-            'justify-content:center;' +
-          '">' +
-            '<span style="' +
-              'color:#fff;' +
-              'font-size:19px;' +
-              'font-weight:bold;' +
-              'transform:rotate(45deg);' +
-            '">⌂</span>' +
-          '</div>',
-        iconSize: [38, 38],
-        iconAnchor: [19, 38],
-        popupAnchor: [0, -35]
-      });
-
-      // قرار دادن نشانگر روی موقعیت دفتر
-      const officeMarker = L.marker(
-        [latitude, longitude],
-        { icon: officeIcon }
-      ).addTo(map);
-
-      // اطلاعات نمایش داده‌شده با لمس نشانگر
-      officeMarker.bindPopup(
-        '<div>' +
-          '<strong>دفتر پیشخوان دولت</strong><br>' +
-          'حامد غلامزاده<br>' +
-          'باهنر غربی، پلاک ۵۶<br>' +
-          '<a href="https://www.google.com/maps/dir/?api=1&destination=' +
-          latitude + ',' + longitude + '" ' +
-          'target="_blank" rel="noopener noreferrer">' +
-          'شروع مسیریابی' +
-          '</a>' +
-        '</div>'
-      );
-
-      // نمایش پنجره اطلاعات هنگام باز شدن نقشه
-      officeMarker.openPopup();
-
-      // فعال‌سازی زوم با چرخ ماوس در دسکتاپ
-      map.on("click", function () {
-        map.scrollWheelZoom.enable();
-      });
-
-      map.on("mouseout", function () {
-        map.scrollWheelZoom.disable();
-      });
-
-      // اصلاح اندازه نقشه برای نمایش صحیح در موبایل
-      setTimeout(function () {
-        map.invalidateSize();
-      }, 250);
-
-      window.addEventListener("resize", function () {
-        map.invalidateSize();
-      });
-    });
+      }
+    })();
   </script>
 </body>
 </html>
